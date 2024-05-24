@@ -1,3 +1,5 @@
+require("lib/physics") -- This should probably be Heartbeat
+
 Entity = {}
 Entity.__index = Entity
 
@@ -17,7 +19,23 @@ function Entity:new(id, width, height)
 	-- The change in speed
 	instance.dx = 0
 	instance.dy = 0
+	instance.components = {}
 	return instance
+end
+
+function Entity:addComponent(component)
+	table.insert(self.components, component)
+	component.parent = self
+	component:update()
+end
+
+function Entity:remove()
+	-- Remove the components
+	for _, component in ipairs(self.components) do
+		component:remove()
+	end
+	-- Destroy the object
+	self = nil
 end
 
 function Entity:addTexture(texturePath)
@@ -32,4 +50,12 @@ function Entity:draw()
 	-- Old Heartbeat code below, should wait until Camera is done
 	-- In fact, it would be best to have a way to automate the camera coords system
 	-- love.graphics.rectangle("fill", Camera.convert("x", object.x), Camera.convert("y", object.y), object.width, object.height)
+end
+
+function Entity:update()
+	-- Do all the components
+	for _, component in ipairs(self.components) do
+		-- print("UPDATE ENTITY")
+		component:update()
+	end
 end

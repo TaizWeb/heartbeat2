@@ -17,14 +17,19 @@ function Physics:addEntity(entity)
 	table.insert(self.entities, entity)
 end
 
+function Physics:remove()
+	return true
+end
+
 --- Entity class constructor
 -- @param dt number: The change in time
 function Physics:update(dt)
 	-- Apply gravity
-	for _, entity in ipairs(self.entities) do
-		entity.dy = entity.dy + self.gravity
-		entity.y = entity.y + entity.dy
-	end
+	-- for _, entity in ipairs(self.entities) do
+	-- 	entity.dy = entity.dy + self.gravity
+	-- 	entity.y = entity.y + entity.dy
+	-- end
+	--
 
 	-- Update forces
 end
