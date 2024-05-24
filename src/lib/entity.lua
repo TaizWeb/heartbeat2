@@ -34,8 +34,10 @@ function Entity:remove()
 	for _, component in ipairs(self.components) do
 		component:remove()
 	end
-	-- Destroy the object
-	self = nil
+	-- Destroy all fields to GC can eat it
+	for k in pairs(self) do
+		self[k] = nil
+	end
 end
 
 function Entity:addTexture(texturePath)
@@ -53,9 +55,8 @@ function Entity:draw()
 end
 
 function Entity:update()
-	-- Do all the components
+	-- Update all the components
 	for _, component in ipairs(self.components) do
-		-- print("UPDATE ENTITY")
 		component:update()
 	end
 end
