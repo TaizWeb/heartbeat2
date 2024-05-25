@@ -1,5 +1,5 @@
 local Entity = require("lib/entity") -- This should probably be Heartbeat
-local NewPhysics = require("lib/new_physics") -- This should probably be Heartbeat
+local Physics = require("lib/physics") -- This should probably be Heartbeat
 
 local KEYS = {
 	jump = "z",
@@ -7,7 +7,7 @@ local KEYS = {
 }
 
 -- physics = Physics:new()
-physics = NewPhysics:new()
+physics = Physics:new()
 entity = Entity:new("boxman", 50, 50)
 entity:addComponent(physics)
 -- physics:addEntity(entity:)

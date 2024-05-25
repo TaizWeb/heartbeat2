@@ -1,5 +1,5 @@
-Physics = {
-	gravity = 0.5,
+local Physics = {
+	gravity = 0.5, -- Arbitrary gravitation constant
 }
 Physics.__index = Physics
 
@@ -7,29 +7,25 @@ Physics.__index = Physics
 -- @return table: The physics table
 function Physics:new()
 	local instance = setmetatable({}, Physics)
-	instance.entities = {}
+	instance.parent = nil -- Unset until initialized
 	return instance
 end
 
---- Entity class constructor
--- @param entity Entity: The Entity instance to add
-function Physics:addEntity(entity)
-	table.insert(self.entities, entity)
+--- Update the object's change in speed to match gravity
+function Physics:update()
+	if self.parent then
+		self.parent.dy = self.parent.dy + self.gravity
+		self.parent.y = self.parent.y + self.parent.dy
+	end
 end
 
+--- Remove the physics system
 function Physics:remove()
-	return true
+	if self.parent then -- Maybe this can be an inherited feature?
+		print("Removing physics :(")
+		self.parent = nil
+		return true
+	end
 end
 
---- Entity class constructor
--- @param dt number: The change in time
-function Physics:update(dt)
-	-- Apply gravity
-	-- for _, entity in ipairs(self.entities) do
-	-- 	entity.dy = entity.dy + self.gravity
-	-- 	entity.y = entity.y + entity.dy
-	-- end
-	--
-
-	-- Update forces
-end
+return Physics
