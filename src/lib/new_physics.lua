@@ -1,4 +1,4 @@
-NewPhysics = {
+local NewPhysics = {
 	gravity = 0.5, -- Arbitrary gravitation constant
 }
 NewPhysics.__index = NewPhysics
@@ -27,3 +27,5 @@ function NewPhysics:remove()
 		return true
 	end
 end
+
+return NewPhysics

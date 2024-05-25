@@ -1,6 +1,4 @@
-require("lib/physics") -- This should probably be Heartbeat
-
-Entity = {}
+local Entity = {}
 Entity.__index = Entity
 
 --- Entity class constructor
@@ -60,3 +58,5 @@ function Entity:update()
 		component:update()
 	end
 end
+
+return Entity

@@ -1,6 +1,5 @@
-require("lib/input") -- This should probably be Heartbeat
-require("lib/entity") -- This should probably be Heartbeat
-require("lib/new_physics") -- This should probably be Heartbeat
+local Entity = require("lib/entity") -- This should probably be Heartbeat
+local NewPhysics = require("lib/new_physics") -- This should probably be Heartbeat
 
 local KEYS = {
 	jump = "z",
@@ -23,6 +22,7 @@ function love.keypressed(key, scancode, isrepeat)
 	if key == KEYS.jump then
 		print("JUMPED")
 		entity:remove()
+		entity = nil
 	end
 end
 
