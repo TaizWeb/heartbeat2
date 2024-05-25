@@ -1,0 +1,55 @@
+{
+    "level_properties": {
+        "name": "test level",
+        "height": 500,
+        "width": 500,
+        "background": "path/to/background",
+        "parallax": true,
+        "layers": [
+            {
+                "path": "path/to/background",
+                "scroll_speed": 100,
+            }
+            {
+                "path": "path/to/background",
+                "scroll_speed": 200,
+            }
+        ]
+    },
+    "tiles": [
+        {
+            "id": "stone",
+            "x_position": 0,
+            "y_position": 0,
+            "condition": "render_tile"
+        },
+        {
+            "id": "stone",
+            "x_position": 25,
+            "y_position": 25,
+        },
+        {
+            "id": "stone",
+            "x_position": 50,
+            "y_position": 50,
+        },
+    ],
+    "entities": [
+        {
+            "id": "boxman",
+            "x_position": 100,
+            "y_position": 100,
+            "condition": "render_entity"
+        },
+        {
+            "id": "boxman",
+            "x_position": 125,
+            "y_position": 125,
+        },
+        {
+            "id": "boxman",
+            "x_position": 150,
+            "y_position": 150,
+        },
+    ]
+}
