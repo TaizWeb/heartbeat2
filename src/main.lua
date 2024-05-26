@@ -8,9 +8,9 @@ local KEYS = {
 }
 
 -- physics = Physics:new()
-physics = Physics:new()
-level = Level:new()
-entity = Entity:new("boxman", 50, 50)
+local physics = Physics:new()
+local level = Level:new()
+local entity = Entity:new("boxman", 50, 50)
 -- physics = Level:new()
 entity:addComponent(physics)
 -- physics:addEntity(entity:)
