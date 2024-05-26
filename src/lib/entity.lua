@@ -1,10 +1,11 @@
 local Entity = {}
 Entity.__index = Entity
 
---- Entity class constructor
--- @param name string: The name of the entity
--- @return table: The entity table
--- TODO: Maybe change this to take in a table for named parameters?
+---Entity class constructor
+---@param id string The unique ID of the entity
+---@param width number The width of the entity
+---@param height number The width of the entity
+---@return table entity The entity object
 function Entity:new(id, width, height)
 	local instance = setmetatable({}, Entity)
 	instance.id = id or "Unnamed"
@@ -21,12 +22,15 @@ function Entity:new(id, width, height)
 	return instance
 end
 
+---Adds a new component (e.x. physics) to the entity
+---@param component table The component to add
 function Entity:addComponent(component)
 	table.insert(self.components, component)
 	component.parent = self
 	component:update()
 end
 
+---Remove the entity from the level
 function Entity:remove()
 	-- Remove the components
 	for _, component in ipairs(self.components) do
@@ -42,8 +46,7 @@ function Entity:addTexture(texturePath)
 	-- I dunno do some loading stuff here
 end
 
---- Draw the entity to the screen
--- @param name string: The name of the entity
+---Draw the entity to the screen
 function Entity:draw()
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
@@ -52,8 +55,8 @@ function Entity:draw()
 	-- love.graphics.rectangle("fill", Camera.convert("x", object.x), Camera.convert("y", object.y), object.width, object.height)
 end
 
+---Update the entity and it's components
 function Entity:update()
-	-- Update all the components
 	for _, component in ipairs(self.components) do
 		component:update()
 	end
