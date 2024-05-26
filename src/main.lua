@@ -10,9 +10,11 @@ local KEYS = {
 -- physics = Physics:new()
 local physics = Physics:new()
 local level = Level:new()
-local entity = Entity:new("boxman", 50, 50)
+-- local entity = Entity:new("boxman", 50, 50)
+Level:addEntity("boxman")
+
 -- physics = Level:new()
-entity:addComponent(physics)
+-- entity:addComponent(physics)
 -- physics:addEntity(entity:)
 level:loadLevel("level_mockup.json")
 
@@ -31,10 +33,11 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.draw()
-	if entity ~= nil then
-		entity:draw()
-		entity:update()
-	end
+	Level:render()
+	-- if entity ~= nil then
+	-- 	entity:draw()
+	-- 	entity:update()
+	-- end
 	-- physics:update()
 	-- print(entity.dy)
 end

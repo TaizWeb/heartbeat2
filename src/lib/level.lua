@@ -1,5 +1,12 @@
 local json = require("lib/json")
-local Level = {}
+local Entities = require("entities")
+local Entity = require("lib/entity")
+local Level = {
+	data = {
+		entities = {},
+		tiles = {},
+	},
+}
 Level.__index = Level
 
 function Level:new()
@@ -28,6 +35,26 @@ end
 
 --- Get the flags in the level and load them
 function Level:loadFlags() end
+
+function Level:addEntity(id)
+	-- Get the entity's data table
+	local entityRef = Entities[id]
+	-- Create the entity
+	local entityInstance = Entity:new(entityRef.id, entityRef.width, entityRef.height)
+	-- Add the components
+	for _, component in ipairs(entityRef.components) do
+		entityInstance:addComponent(component)
+	end
+	-- Insert it into the Level's entity table
+	table.insert(self.data.entities, entityInstance)
+end
+
+function Level:render()
+	for _, entity in ipairs(self.data.entities) do
+		entity:draw()
+		entity:update()
+	end
+end
 
 ---Load the level from JSON format
 ---@param path string The path to the file, from the root
