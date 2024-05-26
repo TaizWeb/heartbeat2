@@ -1,5 +1,6 @@
 local Entity = require("lib/entity") -- This should probably be Heartbeat
 local Physics = require("lib/physics") -- This should probably be Heartbeat
+local Level = require("lib/level")
 
 local KEYS = {
 	jump = "z",
@@ -8,9 +9,12 @@ local KEYS = {
 
 -- physics = Physics:new()
 physics = Physics:new()
+level = Level:new()
 entity = Entity:new("boxman", 50, 50)
+-- physics = Level:new()
 entity:addComponent(physics)
 -- physics:addEntity(entity:)
+level:loadLevel("level_mockup.json")
 
 function love.load()
 	love.window.setTitle("Electric Boogaloo")
