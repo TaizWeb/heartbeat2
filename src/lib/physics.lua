@@ -1,5 +1,5 @@
 local Physics = {
-	gravity = 0.5, -- Arbitrary gravitation constant
+	gravity = 0.5, -- Arbitrary gravitation constant; please don't let go of me
 }
 Physics.__index = Physics
 
@@ -14,6 +14,7 @@ end
 --- Update the object's change in speed to match gravity
 function Physics:update()
 	if self.parent then
+		-- Keep me from drifting through the atmosphere
 		self.parent.dy = self.parent.dy + self.gravity
 		self.parent.y = self.parent.y + self.parent.dy
 	end

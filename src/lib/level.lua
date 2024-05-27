@@ -28,22 +28,33 @@ function Level:loadTiles(tileTable)
 	print("loading tiles...")
 end
 
---- Get the entities in the level and load them
+---Get the entities in the level and load them
+---@param entityTable table The entity table from the level JSON
 function Level:loadEntites(entityTable)
 	print("loading entities...")
+	for _, entity in ipairs(entityTable) do
+		Level:addEntity(entity.id, entity.x_position, entity.y_position)
+	end
 end
 
 --- Get the flags in the level and load them
 function Level:loadFlags() end
 
-function Level:addEntity(id)
+---Adds an entity to the level
+---@param id string The ID of the entity
+---@param x_pos number The x position
+---@param y_pos number The x position
+function Level:addEntity(id, x_pos, y_pos)
 	-- Get the entity's data table
 	local entityRef = Entities[id]
 	-- Create the entity
 	local entityInstance = Entity:new(entityRef.id, entityRef.width, entityRef.height)
+	entityInstance.x = x_pos
+	entityInstance.y = y_pos
 	-- Add the components
 	for _, component in ipairs(entityRef.components) do
-		entityInstance:addComponent(component)
+		local componentInstance = component:new()
+		entityInstance:addComponent(componentInstance)
 	end
 	-- Insert it into the Level's entity table
 	table.insert(self.data.entities, entityInstance)

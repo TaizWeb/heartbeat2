@@ -11,7 +11,7 @@ local KEYS = {
 local physics = Physics:new()
 local level = Level:new()
 -- local entity = Entity:new("boxman", 50, 50)
-Level:addEntity("boxman")
+Level:addEntity("boxman", 0, 0)
 
 -- physics = Level:new()
 -- entity:addComponent(physics)
