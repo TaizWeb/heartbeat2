@@ -4,7 +4,7 @@ local Entities = {
 		id = "boxman",
 		width = 50,
 		height = 50,
-		components = { physics:new() },
+		components = { physics },
 	},
 }
 

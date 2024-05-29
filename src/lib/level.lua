@@ -1,6 +1,9 @@
 local json = require("lib/json")
-local Entities = require("entities")
 local Entity = require("lib/entity")
+local Tile = require("lib/tile")
+local Entities = require("entities")
+local Tiles = require("tiles")
+
 local Level = {
 	data = {
 		entities = {},
@@ -23,9 +26,13 @@ function Level:writeEntites() end
 --- Get the flags in the level and write them
 function Level:writeFlags() end
 
---- Get the tiles in the level and load them
+---Get the tiles in the level and load them
+---@param tileTable table The tile table from the level JSON
 function Level:loadTiles(tileTable)
 	print("loading tiles...")
+	for _, tile in ipairs(tileTable) do
+		Level:addTile(tile.id, tile.x_position, tile.y_position)
+	end
 end
 
 ---Get the entities in the level and load them
@@ -43,7 +50,7 @@ function Level:loadFlags() end
 ---Adds an entity to the level
 ---@param id string The ID of the entity
 ---@param x_pos number The x position
----@param y_pos number The x position
+---@param y_pos number The y position
 function Level:addEntity(id, x_pos, y_pos)
 	-- Get the entity's data table
 	local entityRef = Entities[id]
@@ -60,10 +67,31 @@ function Level:addEntity(id, x_pos, y_pos)
 	table.insert(self.data.entities, entityInstance)
 end
 
+---Adds an tile to the level
+---@param id string The ID of the tile
+---@param x_pos number The x position
+---@param y_pos number The y position
+function Level:addTile(id, x_pos, y_pos)
+	-- Get the entity's data table
+	local tileRef = Tiles[id]
+	-- Create the entity
+	local tileInstance = Tile:new(tileRef.id, tileRef.width, tileRef.height)
+	tileInstance.x = x_pos
+	tileInstance.y = y_pos
+
+	-- Insert it into the Level's entity table
+	table.insert(self.data.tiles, tileInstance)
+end
+
 function Level:render()
 	for _, entity in ipairs(self.data.entities) do
 		entity:draw()
 		entity:update()
+	end
+
+	for _, tile in ipairs(self.data.tiles) do
+		tile:draw()
+		tile:update()
 	end
 end
 
