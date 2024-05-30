@@ -17,14 +17,34 @@ function Level:new()
 	return instance
 end
 
---- Get the tiles in the level and write them
+---Get the tiles in the level and write them
 function Level:writeTiles() end
 
---- Get the entities in the level and write them
+---Get the entities in the level and write them
 function Level:writeEntites() end
 
---- Get the flags in the level and write them
+---Get the flags in the level and write them
 function Level:writeFlags() end
+
+---Write the current Level datastructure to a JSON file
+---@param filename string The filename to write to
+---@return boolean status Whether or not the write was successful
+function Level:writeLevel(filename)
+	-- Grab the level object and convert it to a JSON string
+	-- local levelTable = Level.data
+	local levelJSON = json.encode(self.data)
+	local file, err = io.open(filename, "a")
+
+	-- Write the file
+	if not file then
+		print("Could not open file: " .. err)
+		return false
+	end
+	file:write(levelJSON)
+	file:close()
+
+	return true
+end
 
 ---Get the tiles in the level and load them
 ---@param tileTable table The tile table from the level JSON
@@ -44,7 +64,7 @@ function Level:loadEntites(entityTable)
 	end
 end
 
---- Get the flags in the level and load them
+---Get the flags in the level and load them
 function Level:loadFlags() end
 
 ---Adds an entity to the level
@@ -83,12 +103,15 @@ function Level:addTile(id, x_pos, y_pos)
 	table.insert(self.data.tiles, tileInstance)
 end
 
+---Render the level, to be done on a per-frame basis
 function Level:render()
+	-- Entity rendering
 	for _, entity in ipairs(self.data.entities) do
 		entity:draw()
 		entity:update()
 	end
 
+	-- Tile rendering
 	for _, tile in ipairs(self.data.tiles) do
 		tile:draw()
 		tile:update()
@@ -111,6 +134,7 @@ function Level:loadLevel(path)
 	self.data = json.decode(content)
 	print("loaded: " .. self.data.properties.name)
 
+	-- Create the objects
 	for key, value in pairs(self.data) do
 		if key == "tiles" then
 			self:loadTiles(value)

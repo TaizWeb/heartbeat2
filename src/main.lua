@@ -29,6 +29,9 @@ function love.keypressed(key, scancode, isrepeat)
 		print("JUMPED")
 		entity:remove()
 		entity = nil
+	elseif key == KEYS.interact then
+		print("writing??")
+		level:writeLevel("foobar.json")
 	end
 end
 
