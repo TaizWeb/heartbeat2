@@ -17,15 +17,6 @@ function Level:new()
 	return instance
 end
 
----Get the tiles in the level and write them
-function Level:writeTiles() end
-
----Get the entities in the level and write them
-function Level:writeEntites() end
-
----Get the flags in the level and write them
-function Level:writeFlags() end
-
 ---Write the current Level datastructure to a JSON file
 ---@param filename string The filename to write to
 ---@return boolean status Whether or not the write was successful
@@ -63,9 +54,6 @@ function Level:loadEntites(entityTable)
 		Level:addEntity(entity.id, entity.x_position, entity.y_position)
 	end
 end
-
----Get the flags in the level and load them
-function Level:loadFlags() end
 
 ---Adds an entity to the level
 ---@param id string The ID of the entity
