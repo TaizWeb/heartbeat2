@@ -42,7 +42,7 @@ end
 function Level:loadTiles(tileTable)
 	print("loading tiles...")
 	for _, tile in ipairs(tileTable) do
-		Level:addTile(tile.id, tile.x_position, tile.y_position)
+		self:addTile(tile.id, tile.x_position, tile.y_position)
 	end
 end
 
@@ -51,7 +51,7 @@ end
 function Level:loadEntites(entityTable)
 	print("loading entities...")
 	for _, entity in ipairs(entityTable) do
-		Level:addEntity(entity.id, entity.x_position, entity.y_position)
+		self:addEntity(entity.id, entity.x_position, entity.y_position)
 	end
 end
 
@@ -119,18 +119,21 @@ function Level:loadLevel(path)
 	file:close()
 
 	-- Decode it
-	self.data = json.decode(content)
-	print("loaded: " .. self.data.properties.name)
+	-- self.data = json.decode(content)
+	local json_data = json.decode(content)
 
 	-- Create the objects
-	for key, value in pairs(self.data) do
-		if key == "tiles" then
+	for key, value in pairs(json_data) do
+		if key == "properties" then
+			self.data.properties = value
+		elseif key == "tiles" then
 			self:loadTiles(value)
 		elseif key == "entities" then
 			self:loadEntites(value)
 		end
 	end
 
+	print(string.format('Loaded "%s" successfully!', self.data.properties.name))
 	return true
 end
 
